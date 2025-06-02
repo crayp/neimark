@@ -16,7 +16,7 @@ SYSTEM_PROMPT = """
 
 Текст для анализа:  """
 
-def summarize(chat) :
+def summarize(chat):
     data = {
         "model": MODEL_NAME,
         "prompt": f"{SYSTEM_PROMPT}\n\n{chat}",

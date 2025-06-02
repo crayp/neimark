@@ -24,6 +24,7 @@ SYSTEM_PROMPT = """
 "Легко ли получить обратную связь по возникающим вопросам?"  
 "Занятия хорошо организованы и логически выстроены?"  
 """
+
 history = []
 
 def ask_llama(prompt):
@@ -35,26 +36,12 @@ def ask_llama(prompt):
     response = requests.post(OLLAMA_URL, json=data)
     return response.json()["response"]
 
-def survey() :
+def get_first_question():
+    return ask_llama("Просто выведи следующий текст без изменений: \"Что вы можете сказать о данном преподавателе?\"")
 
-    negative_counter = 0
-    counter = 0
+def get_next_question(history):
+    return ask_llama(f"Предыдущие ответы студента: {history}. Задай следующий вопрос.")
 
-    while negative_counter < 3 and counter <= 10 :
-        if not history:
-            question = ask_llama("Просто выведи следующий текст без изменений: \"Что вы можете сказать о данном преподавателе?\"")
-        else:
-            question = ask_llama(f"Предыдущие ответы студента: {history}. Задай следующий вопрос.")
-        
-        print(f"\n🦊 Вопрос {counter+1}: {question}")
-        answer = input("💬 Ваш ответ: ")        
-        history.append({"question": question, "answer": answer})
-        negative_counter += int(validate(question, answer))
-        counter += 1
-
-    result = ''
-    
-    for item in history:
-        result += f"Вопрос: {item['question']}" + f"Ответ: {item['answer']}\n"
-
-    return result
+def validate_answer(question, answer):
+    from qualifier import validate
+    return int(validate(question, answer))

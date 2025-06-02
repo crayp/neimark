@@ -26,7 +26,7 @@ SYSTEM_PROMPT = """
 **Текст для анализа:"
 """
 
-def rentability(answers) :
+def rentability(answers):
     data = {
         "model": MODEL_NAME,
         "prompt": f"{SYSTEM_PROMPT}\n\n{answers}",
