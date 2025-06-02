@@ -17,7 +17,7 @@ def pipeline() :
 
     # Рентабельность
     isRent = bool(int(rentability(answers)))
-    print("Рентабельность отзывов: ", isRent)
+    print("\nРентабельность отзывов:", isRent)
 
 if __name__ == '__main__' :
     pipeline()
